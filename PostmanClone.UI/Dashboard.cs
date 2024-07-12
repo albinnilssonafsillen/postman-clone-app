@@ -4,6 +4,8 @@ namespace PostmanClone.UI
 {
     public partial class Dashboard : Form
     {
+        private readonly IApiAccess _apiAccess = new ApiAccess();
+
         public Dashboard()
         {
             InitializeComponent();
@@ -11,26 +13,21 @@ namespace PostmanClone.UI
 
         private async void callAPI_Click(object sender, EventArgs e)
         {
+            stripStatus.Text = "Calling API...";
+            resultWindow.Text = string.Empty;
 
             try
             {
-                if (string.IsNullOrEmpty(apiText.Text.ToLower()) || !apiText.Text.StartsWith("https://"))
+                if (_apiAccess.IsValidUrl(apiText.Text) == false)
                 {
-                    stripStatus.Text = "Error in Api Url. Must contain value and start with https://";
+                    stripStatus.Text = "Invalid URL";
                     return;
                 }
-                stripStatus.Text = "Calling API...";
-
-                PostManLibrary library = new PostManLibrary();
-
-                int callType = 1;
-                var res = await library.Call(apiText.Text, callType);
-
-
-
-                await Task.Delay(2000);
-
-                stripStatus.Text = "Ready";
+                else
+                {
+                    resultWindow.Text = await _apiAccess.CallApiAsync(apiText.Text);
+                    stripStatus.Text = "Ready";
+                }
             }
             catch (Exception ex)
             {

@@ -51,9 +51,8 @@
             // 
             apiText.BackColor = SystemColors.Info;
             apiText.Location = new Point(42, 63);
-            apiText.Multiline = true;
             apiText.Name = "apiText";
-            apiText.Size = new Size(768, 104);
+            apiText.Size = new Size(768, 47);
             apiText.TabIndex = 2;
             // 
             // resultWindow
