@@ -9,6 +9,7 @@ namespace PostmanClone.UI
         public Dashboard()
         {
             InitializeComponent();
+            httpVerpSelection.SelectedItem = "GET";
         }
 
         private async void callAPI_Click(object sender, EventArgs e)
@@ -26,6 +27,7 @@ namespace PostmanClone.UI
                 else
                 {
                     resultWindow.Text = await _apiAccess.CallApiAsync(apiText.Text);
+                    callData.SelectedTab = outputTab;
                     stripStatus.Text = "Ready";
                 }
             }
