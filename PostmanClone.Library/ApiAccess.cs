@@ -7,7 +7,6 @@ namespace PostmanClone.Library
     {
         private readonly HttpClient _httpClient = new();
 
-
         public async Task<string> CallApiAsync(string url,
            string content, HttpAction action = HttpAction.GET, bool formatOUtput = true)
         {
@@ -16,14 +15,11 @@ namespace PostmanClone.Library
             return await CallApiAsync(url, stringContent, action, formatOUtput);
         }
 
-
-
         public async Task<string> CallApiAsync(string url, HttpContent content = null,
             HttpAction action = HttpAction.GET,
             bool formatOutPut = true
             )
         {
-
 
             HttpResponseMessage? response;
             switch (action)
@@ -33,6 +29,15 @@ namespace PostmanClone.Library
                     break;
                 case HttpAction.POST:
                     response = await _httpClient.PostAsync(url, content);
+                    break;
+                case HttpAction.PUT:
+                    response = await _httpClient.PutAsync(url, content);
+                    break;
+                case HttpAction.PATCH:
+                    response = await _httpClient.PatchAsync(url, content);
+                    break;
+                case HttpAction.DELETE:
+                    response = await _httpClient.DeleteAsync(url);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(action));
@@ -46,7 +51,6 @@ namespace PostmanClone.Library
 
                 if (formatOutPut)
                 {
-
                     var jsonEl = JsonSerializer.Deserialize<JsonElement>(json);
                     string prettyJson = JsonSerializer.Serialize(jsonEl,
                         new JsonSerializerOptions { WriteIndented = true }

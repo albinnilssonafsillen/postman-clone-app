@@ -73,7 +73,7 @@
             resultWindow.Name = "resultWindow";
             resultWindow.ReadOnly = true;
             resultWindow.ScrollBars = ScrollBars.Both;
-            resultWindow.Size = new Size(754, 481);
+            resultWindow.Size = new Size(754, 495);
             resultWindow.TabIndex = 3;
             // 
             // callAPI
@@ -111,7 +111,7 @@
             httpVerpSelection.BackColor = SystemColors.Info;
             httpVerpSelection.DropDownStyle = ComboBoxStyle.DropDownList;
             httpVerpSelection.FormattingEnabled = true;
-            httpVerpSelection.Items.AddRange(new object[] { "GET", "POST" });
+            httpVerpSelection.Items.AddRange(new object[] { "GET", "POST", "PUT", "PATCH", "DELETE" });
             httpVerpSelection.Location = new Point(42, 63);
             httpVerpSelection.Name = "httpVerpSelection";
             httpVerpSelection.Size = new Size(147, 47);
@@ -154,10 +154,10 @@
             // outputTab
             // 
             outputTab.Controls.Add(resultWindow);
-            outputTab.Location = new Point(4, 48);
+            outputTab.Location = new Point(4, 34);
             outputTab.Name = "outputTab";
             outputTab.Padding = new Padding(3);
-            outputTab.Size = new Size(760, 487);
+            outputTab.Size = new Size(760, 501);
             outputTab.TabIndex = 1;
             outputTab.Text = "Results";
             outputTab.UseVisualStyleBackColor = true;
