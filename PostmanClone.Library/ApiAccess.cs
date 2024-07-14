@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 
 namespace PostmanClone.Library
 {
@@ -6,11 +7,38 @@ namespace PostmanClone.Library
     {
         private readonly HttpClient _httpClient = new();
 
+
         public async Task<string> CallApiAsync(string url,
-            bool formatOutPut = true,
-            HttpAction action = HttpAction.GET)
+           string content, HttpAction action = HttpAction.GET, bool formatOUtput = true)
         {
-            var response = await _httpClient.GetAsync(url);
+            StringContent stringContent = new(content, Encoding.UTF8, "application/json");
+
+            return await CallApiAsync(url, stringContent, action, formatOUtput);
+        }
+
+
+
+        public async Task<string> CallApiAsync(string url, HttpContent content = null,
+            HttpAction action = HttpAction.GET,
+            bool formatOutPut = true
+            )
+        {
+
+
+            HttpResponseMessage? response;
+            switch (action)
+            {
+                case HttpAction.GET:
+                    response = await _httpClient.GetAsync(url);
+                    break;
+                case HttpAction.POST:
+                    response = await _httpClient.PostAsync(url, content);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(action));
+                    break;
+            }
+
 
             if (response.IsSuccessStatusCode)
             {
@@ -24,11 +52,9 @@ namespace PostmanClone.Library
                         new JsonSerializerOptions { WriteIndented = true }
                         );
                     return prettyJson;
-
                 }
                 else
                 {
-
                     return json;
                 }
             }

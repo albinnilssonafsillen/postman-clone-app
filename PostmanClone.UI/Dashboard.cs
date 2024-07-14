@@ -16,20 +16,27 @@ namespace PostmanClone.UI
         {
             stripStatus.Text = "Calling API...";
             resultWindow.Text = string.Empty;
+            if (_apiAccess.IsValidUrl(apiText.Text) == false)
+            {
+                stripStatus.Text = "Invalid URL";
+                return;
+            }
+
+            HttpAction action;
+            if (Enum.TryParse(httpVerpSelection.SelectedItem!.ToString(), out action) == false)
+            {
+                stripStatus.Text = "Invalid HTTP Verb";
+                return;
+            }
+
 
             try
             {
-                if (_apiAccess.IsValidUrl(apiText.Text) == false)
-                {
-                    stripStatus.Text = "Invalid URL";
-                    return;
-                }
-                else
-                {
-                    resultWindow.Text = await _apiAccess.CallApiAsync(apiText.Text);
-                    callData.SelectedTab = outputTab;
-                    stripStatus.Text = "Ready";
-                }
+
+                resultWindow.Text = await _apiAccess.CallApiAsync(apiText.Text, bodyText.Text, action);
+                callData.SelectedTab = outputTab;
+                outputTab.Focus();
+                stripStatus.Text = "Ready";
             }
             catch (Exception ex)
             {
