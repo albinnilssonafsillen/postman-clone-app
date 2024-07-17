@@ -59,7 +59,7 @@
             apiText.BackColor = SystemColors.Info;
             apiText.Location = new Point(209, 63);
             apiText.Name = "apiText";
-            apiText.PlaceholderText = "Url";
+            apiText.PlaceholderText = "https://jsonplaceholder.typicode.com/";
             apiText.Size = new Size(601, 47);
             apiText.TabIndex = 2;
             // 
